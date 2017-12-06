@@ -20,6 +20,13 @@ function sum(arraySum){
    return arraySum.reduce((total,num) => total + num);
 }
 
+function sumOperation(){
+    values.reduce((total,num) => toString(total)+toString(num));
+    operation = "sum";
+    console.log("we will sum: ")
+    console.log(values);
+}
+
 function operate(operation){
      const display=document.querySelector("#result p"); 
      display.textContent = sum(values);
