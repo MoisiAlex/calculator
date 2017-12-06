@@ -69,9 +69,11 @@ p{
 }
 
 .right>*:hover{
+    
     border:1px solid #fff;
 }
 .left>*:hover{
+    
     border:1px solid #fff;
 }
 
@@ -101,6 +103,7 @@ p{
 .number{
     flex:32.3%;
     background-color: #657f91;
+    transition: all .07s ease;
 }
 
 .zero{
@@ -109,4 +112,9 @@ p{
 .equal{
    flex:20%;
     
+}
+
+.pressed{
+    color:#000;
+    transform: scale(1.1);
 }
