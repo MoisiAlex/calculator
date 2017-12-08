@@ -11,6 +11,7 @@ p{
     color:#fff;
     font-family: 'Roboto Mono', monospace;
     margin: 2%;
+    font-size:1.5em;
 }
 .container{
     display: flex;
@@ -21,100 +22,116 @@ p{
 .calc{
      padding:10px;
     display:flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     height:500px;
     width:400px;
-     background-color: #000;
+    background-color: #000;
     border-radius:2%;
     box-shadow: 0px 0px 25px #291a1a;
 }
 
+.display{
+    flex:1;
+    margin:10px;  
+}
+
+#result, #history{
+    font-family: 'VT323', monospace;
+    color:#fff;
+    text-align: right;
+
+}
+
+#result{
+    font-size: 2em;
+    overflow:hidden;
+}
+
+#history{
+    font-size: 1em;
+    margin: 0;
+    margin-right: 0px;
+
+margin-right: 10px;
+}
+
 .calcBody{
      display:flex;
-    flex-wrap: wrap;
-       flex: 100%;
-    min-height: 420px;
+     flex: 100%;
+    
 }
 .left{
-     display:flex;
+    display:flex;
     flex-wrap: wrap;
-       flex: 75%;
-    min-height: 420px;
+    flex: 75%;
+   
 }
 
 .right{
      display:flex;
     flex-wrap: wrap;
     flex-direction: column;
-       flex: 25%;
-    min-height: 420px;
+    flex: 25%;
+   
     
 }
 
-.left>*{
+.left button, .right button{
     display:flex;
     align-items: center;
     justify-content: center;
-    border:1px solid #000;
+    cursor:pointer;
+    border:1px solid rgba(0,0,0,.3);
     
 }
 
-.right>*{
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    border:1px solid #000;
+.right button{
     background-color: #8f9396;
     flex:1;
 }
 
-.right>*:hover{
-    
-    border:1px solid #fff;
-}
-.left>*:hover{
-    
-    border:1px solid #fff;
+
+.right button:hover, .left button:hover{
+     border:1px solid rgba(255, 255, 255, 0.3);
 }
 
-#result{
-    flex:1 100%;
-    align-self: flex-end;
-        
+.right button:hover p, .left button:hover p{
+     color:#0d0d0d;
 }
-#result p{
-    font-family: 'VT323', monospace;
-    color:#fff;
-    text-align: right;
-    font-size: 2em;
-}
+
 
 .ac{
     flex:58%;
-    background-color: #a73838;  
+    background-color: rgb(167, 56, 56);  
 
+}
+
+.ac:focus{
+    background-color: rgb(167, 56, 56, 0.7)
 }
 
 .operation{
     flex:24%;
-    background-color: #8f9396;
+    background-color: rgb(143, 147, 150);
+}
+
+.operation:focus{
+    background-color: rgb(100, 100, 100);
 }
 
 .number{
     flex:32.3%;
-    background-color: #657f91;
+    background-color: rgb(101, 127, 145);
     transition: all .07s ease;
+}
+.number:focus{
+    background-color: rgb(101, 127, 145, 0.7)
 }
 
 .zero{
      flex:66%;
 }
-.equal{
+.right .equal{
    flex:20%;
-    
 }
 
-.pressed{
-    color:#000;
-    transform: scale(1.1);
-}

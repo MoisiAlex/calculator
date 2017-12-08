@@ -1,16 +1,36 @@
-function numberz(e){
+function updateDisplay(e){
     console.log(e);
- 
-    const display=document.querySelector("#result p");   
+    const display = document.querySelector("#result");
+  
+    display.textContent = updateValues(e.target.value);
     
-    values.push(parseInt(e.target.textContent));
-    display.textContent = values.join('');
-    console.log("Currently stored values: " +values);
+    console.log(values);
 }
 
+function updateValues(element){
+    const op = ["/","*","+","-"];
+    
+    const formattedArray =values.reduce(function(a,b){
+        if(op.includes(b))
+            {
+                
+            }
+        
+    },{});
+    
+    if(op.includes(element)){
+        console.log("operator")
+        const holder = values.join('');
+        values=[];
+        values.push(holder);
+    }
+     values.push(element);
+    
+    return values.join('');
+}
 
 function clear(){
-    const display=document.querySelector("#result p");
+    const display=document.querySelector("#result");
     display.textContent = 0;
     values=[];
     console.log("Cleaned stored values:" +values);
@@ -28,7 +48,7 @@ function sumOperation(){
 }
 
 function operate(operation){
-     const display=document.querySelector("#result p"); 
+     const display=document.querySelector(".display p"); 
      display.textContent = sum(values);
     console.log("Just summed:" +values);
 }
@@ -39,8 +59,10 @@ const numbers= document.querySelectorAll(".number");
 const ac = document.querySelector(".ac");
 const equal = document.querySelector(".equal");
 const plus = document.querySelector(".sum");
+const operations= document.querySelectorAll(".operation");
 
-numbers.forEach(number=>number.addEventListener('click',numberz));
+operations.forEach(operator=>operator.addEventListener('click',updateDisplay));
+numbers.forEach(number=>number.addEventListener('click',updateDisplay));
 
 plus.addEventListener('click',sumOperation)
 ac.addEventListener('click',clear);
