@@ -107,7 +107,7 @@ margin-right: 10px;
 }
 
 .ac:focus{
-    background-color: rgb(167, 56, 56, 0.7)
+    background-color: rgb(114, 39, 39);
 }
 
 .operation{
@@ -125,7 +125,7 @@ margin-right: 10px;
     transition: all .07s ease;
 }
 .number:focus{
-    background-color: rgb(101, 127, 145, 0.7)
+    background-color: rgb(72, 90, 103);
 }
 
 .zero{

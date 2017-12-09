@@ -1,72 +1,106 @@
-function updateDisplay(e){
-    console.log(e);
-    const display = document.querySelector("#result");
-  
-    display.textContent = updateValues(e.target.value);
-    
+function updateNumbers(e){
+    values.push(e.target.value);   
+    console.log("Pushed number into values")
     console.log(values);
+    updateDisplays(values.join(""));
+    
 }
 
-function updateValues(element){
-    const op = ["/","*","+","-"];
+
+
+function updateOperations(e){
+    const operator = e.target.value;
     
-    const formattedArray =values.reduce(function(a,b){
-        if(op.includes(b))
-            {
-                
-            }
-        
-    },{});
+    valueString.push(values.join(""));
+     console.log("Pushed all numbers entered previously as one into value string");
+     console.log(valueString);
     
-    if(op.includes(element)){
-        console.log("operator")
-        const holder = values.join('');
-        values=[];
-        values.push(holder);
+    if(operator != "="){ 
+        operationOrder.push(operator);  
+        console.log("Not =, saved to operation order");
+        console.log(operationOrder);
     }
-     values.push(element);
-    
-    return values.join('');
+    history = history+ values.join("")+operator;
+    console.log("updated history with the previous digits and operator");
+    console.log(history);
+
+    updateDisplays(0,history);
+    values=[];
+
 }
+
+function updateDisplays(mainDisplay,historyDisplay){
+    const displayMain = document.querySelector("#result");
+    const displayHistory = document.querySelector("#history");
+    
+    if (typeof historyDisplay === 'undefined'){
+    displayMain.textContent = mainDisplay;
+        }
+    else if(typeof mainDisplay === 'undefined'){
+    
+    displayHistory.textContent = historyDisplay;
+        }
+    else{
+        displayMain.textContent = mainDisplay;
+        displayHistory.textContent = historyDisplay;
+    }
+}
+
 
 function clear(){
-    const display=document.querySelector("#result");
-    display.textContent = 0;
+    updateDisplays(0,0)
     values=[];
-    console.log("Cleaned stored values:" +values);
+    valueString=[];
+    operationOrder=[];
+    history ="";
+    
+    console.log("Cleaned all stored values:");
 }
 
-function sum(arraySum){
-   return arraySum.reduce((total,num) => total + num);
-}
 
-function sumOperation(){
-    values.reduce((total,num) => toString(total)+toString(num));
-    operation = "sum";
-    console.log("we will sum: ")
-    console.log(values);
-}
-
-function operate(operation){
-     const display=document.querySelector(".display p"); 
-     display.textContent = sum(values);
-    console.log("Just summed:" +values);
+function operate(){
+   
+    while (operationOrder.length>0){
+    if(operationOrder[0]==="+"){
+     
+        valueString.splice(0,2,(Number(valueString[0]) + Number(valueString[1])));
+        operationOrder.splice(0,1);
+    }
+    else if(operationOrder[0]==="-"){
+         valueString.splice(0,2,(Number(valueString[0]) - Number(valueString[1])));
+        operationOrder.splice(0,1);
+    }
+    else if(operationOrder[0]==="/"){
+         valueString.splice(0,2,(Number(valueString[0]) / Number(valueString[1])));
+        operationOrder.splice(0,1);
+    }
+    
+    else if(operationOrder[0]==="*"){
+         valueString.splice(0,2,(Number(valueString[0]) * Number(valueString[1])));
+        operationOrder.splice(0,1);
+    }
+    }
+     console.log("Spliced value string:");
+     console.log(valueString);
+    console.log("Spliced operation array:");
+     console.log(operationOrder);
+    
+    updateDisplays(valueString,history+valueString);
+    
+    
 }
 
 let values=[];
-let operation;
+let valueString=[];
+let operationOrder=[];
+let history ="";
 const numbers= document.querySelectorAll(".number");
 const ac = document.querySelector(".ac");
 const equal = document.querySelector(".equal");
-const plus = document.querySelector(".sum");
 const operations= document.querySelectorAll(".operation");
 
-operations.forEach(operator=>operator.addEventListener('click',updateDisplay));
-numbers.forEach(number=>number.addEventListener('click',updateDisplay));
+operations.forEach(operator=>operator.addEventListener('click',updateOperations));
+numbers.forEach(number=>number.addEventListener('click',updateNumbers));
 
-plus.addEventListener('click',sumOperation)
 ac.addEventListener('click',clear);
-equal.addEventListener('click',function(){
-    operate()
-});
-console.log(numbers);
+equal.addEventListener('click',operate);
