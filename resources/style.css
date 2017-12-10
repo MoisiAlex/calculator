@@ -7,11 +7,12 @@ main{
     min-height: 90vh;
 }
 
-p{
+button{
     color:#fff;
     font-family: 'Roboto Mono', monospace;
-    margin: 2%;
     font-size:1.5em;
+    display: block;
+
 }
 .container{
     display: flex;
@@ -39,7 +40,7 @@ p{
     font-family: 'VT323', monospace;
     color:#fff;
     text-align: right;
-
+    margin: 2%;
 }
 
 #result{
@@ -95,7 +96,7 @@ margin-right: 10px;
      border:1px solid rgba(255, 255, 255, 0.3);
 }
 
-.right button:hover p, .left button:hover p{
+.right button:hover span, .left button:hover span{
      color:#0d0d0d;
 }
 
