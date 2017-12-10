@@ -12,7 +12,13 @@ button{
     font-family: 'Roboto Mono', monospace;
     font-size:1.5em;
     display: block;
+}
 
+p{
+    color:#fff;
+    font-family: 'Roboto Mono', monospace;
+    font-size:1em;
+    text-align: center
 }
 .container{
     display: flex;
@@ -32,13 +38,16 @@ button{
 }
 
 .display{
-    flex:1;
-    margin:10px;  
+    flex: 1;
+    margin-bottom: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    background-color: rgb(212, 214, 199);
+    border-radius: 2%;
 }
 
 #result, #history{
     font-family: 'VT323', monospace;
-    color:#fff;
+    color:#353443;
     text-align: right;
     margin: 2%;
 }
