@@ -1,31 +1,62 @@
-function updateNumbers(e){
-    values.push(e.target.value);   
-    console.log("Pushed number into values")
-    console.log(values);
-    updateDisplays(values.join(""));
-    
+function updateNumbers(e){ 
+//This function will read the digits entered and store them until we are ready to add a complete number to our value
+    if(digits.length<20){
+    digits.push(e.target.value);   
+    console.log("Pushed number into digits array.Print the digit array")
+    console.log(digits);
+    updateDisplays(digits.join(""));
+    }
+    else{
+        updateDisplays("That's a lot of numbers!","This is a simple JS app, please hit clear and try something easier.");
+    }
 }
 
 
 
 function updateOperations(e){
+//This function will do some basic validation (no empty numbers, no duplicate operations) and update our valuestring with the full number as well as the operation that should take place
+    
     const operator = e.target.value;
-    
-    valueString.push(values.join(""));
-     console.log("Pushed all numbers entered previously as one into value string");
+    const composedNumber= digits.join("");
+   
+    if(composedNumber!=""){
+    valueString.push(composedNumber);
+        
+     console.log("Digit array not blank. Pushed all numbers entered previously as one into value string. Print ValueString");
      console.log(valueString);
+        }
     
-    if(operator != "="){ 
-        operationOrder.push(operator);  
-        console.log("Not =, saved to operation order");
-        console.log(operationOrder);
+    if (valueString.length>0){
+        
+        history += composedNumber;
+            if(operator != "="){ 
+                if(operationOrder.length<valueString.length){               
+                operationOrder.push(operator);  
+                history += operator;
+                }
+                else{
+                operationOrder.splice(operationOrder.length-1, 1, operator);
+                 history =  history.replace(/.$/,operator);    
+                }
+                console.log("Not =, saved to operation order. Print OperationOrder");
+                console.log(operationOrder);
+                if(history.indexOf("=") != -1){history= history.slice(history.indexOf("=")+1); }  
+            }
+        else{
+            history +=operator;
+        }
+           
+            console.log("Updated history with the previous digits and operator. Print History");
+            console.log(history);
+            updateDisplays(operator,history);
+            digits=[];
+        }
+ 
+        
+    else{
+        updateDisplays(operator,"Please enter a number first");
     }
-    history = history+ values.join("")+operator;
-    console.log("updated history with the previous digits and operator");
-    console.log(history);
-
-    updateDisplays(0,history);
-    values=[];
+    
 
 }
 
@@ -44,12 +75,14 @@ function updateDisplays(mainDisplay,historyDisplay){
         displayMain.textContent = mainDisplay;
         displayHistory.textContent = historyDisplay;
     }
+    
+
 }
 
 
 function clear(){
     updateDisplays(0,0)
-    values=[];
+    digits=[];
     valueString=[];
     operationOrder=[];
     history ="";
@@ -57,40 +90,59 @@ function clear(){
     console.log("Cleaned all stored values:");
 }
 
-
-function operate(){
-   
-    while (operationOrder.length>0){
-    if(operationOrder[0]==="+"){
-     
-        valueString.splice(0,2,(Number(valueString[0]) + Number(valueString[1])));
-        operationOrder.splice(0,1);
+function runTheMath(index){
+//This function handles the heavy lifting of the math as well as removing the operation from the list once it's been executed.
+    
+    console.log("Running through the math function.");
+     if(operationOrder[index]==="+"){
+    
+        valueString.splice(index,2,(Number(valueString[index]) + Number(valueString[index+1])));
+        operationOrder.splice(index,1);
     }
-    else if(operationOrder[0]==="-"){
-         valueString.splice(0,2,(Number(valueString[0]) - Number(valueString[1])));
-        operationOrder.splice(0,1);
+    else if(operationOrder[index]==="-"){
+         valueString.splice(index,2,(Number(valueString[index]) - Number(valueString[index+1])));
+        operationOrder.splice(index,1);
     }
-    else if(operationOrder[0]==="/"){
-         valueString.splice(0,2,(Number(valueString[0]) / Number(valueString[1])));
-        operationOrder.splice(0,1);
+    else if(operationOrder[index]==="/"){
+         valueString.splice(index,2,(Number(valueString[index]) / Number(valueString[index+1])));
+        operationOrder.splice(index,1);
     }
     
-    else if(operationOrder[0]==="*"){
-         valueString.splice(0,2,(Number(valueString[0]) * Number(valueString[1])));
-        operationOrder.splice(0,1);
+    else if(operationOrder[index]==="*"){
+         valueString.splice(index,2,(Number(valueString[index]) * Number(valueString[index+1])));
+        operationOrder.splice(index,1);
     }
-    }
+     
      console.log("Spliced value string:");
      console.log(valueString);
     console.log("Spliced operation array:");
      console.log(operationOrder);
     
-    updateDisplays(valueString,history+valueString);
+}
+
+function operate(){
+//This Function will check if there are any * or / operations and ask runTheMath to calculate those first, otherwise start with the first operation and move from there. 
+    while (operationOrder.length>0){
+        if(operationOrder.indexOf("*") != -1) {
+            runTheMath(operationOrder.indexOf("*"));
+        }
+        if(operationOrder.indexOf("/") != -1) {
+            runTheMath(operationOrder.indexOf("/"));
+        }
+        else{
+            runTheMath(0);
+        }
+    }
+    
+    
+    history=history+valueString
+    
+    updateDisplays(valueString,history);
     
     
 }
 
-let values=[];
+let digits=[];
 let valueString=[];
 let operationOrder=[];
 let history ="";
