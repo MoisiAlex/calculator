@@ -195,14 +195,12 @@ ac.addEventListener('click',clear);
 equal.addEventListener('click',operate);
 
 window.addEventListener('keydown', function(e){
-    const operations= /[/|+|-|*]/;
-    const equals =/[=|Enter]/g;
+    const operations= /[\/|\+|\-|\*]/;
+
     const numberz= /^[0-9]*$/;
     const shift =/[Shift]/;
     console.log(e);
-    console.log(equals.test(e.key));
-     console.log(!shift.test(e.key));            
-    console.log(((equals.test(e.key))&& !shift.test(e.key)));
+ 
    
    if((operations.test(e.key))&& !shift.test(e.key)){
         console.log("Operations");
@@ -212,7 +210,7 @@ window.addEventListener('keydown', function(e){
      console.log("Number");
         updateNumbers(e);}
     
-    else if((equals.test(e.key)) ||(e.keyCode=13) && !shift.test(e.key)) {
+    else if((e.keyCode === 61) || (e.keyCode === 13)) {
         console.log("equals");
          updateOperations(e);
          operate(e);}
